@@ -2,196 +2,499 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cadastro de Associado — DOSE</title>
-  <meta name="description" content="Cadastro de associado DOSE — receba QR code e comece a divulgar." />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>DOSE — Cadastro de Associado (Smart & Responsive)</title>
+  <meta name="description" content="Cadastro de associado DOSE — QR preview, cartão PDF, tabela de ganhos, LGPD e automações." />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#071711;
-      --panel:#0f2b20;
+      --bg-1:#04140e;
+      --bg-2:#062a17;
       --accent:#d9b14a;
+      --accent-2:#7cff7c;
       --muted:#9db39a;
-      --danger:#b34848;
       --glass: rgba(255,255,255,0.03);
-      --br:10px;
+      --card: rgba(10,40,30,0.7);
+      --radius:12px;
+      --glass-border: rgba(255,255,255,0.04);
+      --max-width:1100px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html,body{height:100%;margin:0}
     body{
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg, #06120b 0%, #0a281b 100%);
-      color: #eaf7ec;
-      padding: 30px;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background:
+        radial-gradient(900px 400px at 10% 10%, rgba(124,255,124,0.02), transparent 8%),
+        linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      color:#eaf7ec;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:20px;
       display:flex;
-      align-items:center;
       justify-content:center;
+      align-items:flex-start;
     }
 
-    .card{
+    /* Container */
+    .container{
       width:100%;
-      max-width:520px;
-      background: linear-gradient(180deg,var(--panel), rgba(0,0,0,0.2));
-      border-radius: var(--br);
+      max-width:var(--max-width);
+      margin:0 auto;
+      display:flex;
+      gap:20px;
+      align-items:flex-start;
+      padding-bottom:40px;
+    }
+
+    /* Left hero */
+    .hero{
+      flex:1 1 60%;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05));
+      border-radius:var(--radius);
       padding:22px;
-      box-shadow: 0 12px 34px rgba(0,0,0,0.6);
-      border: 1px solid rgba(255,255,255,0.03);
-      text-align:center;
+      border:1px solid var(--glass-border);
+      box-shadow:0 14px 36px rgba(0,0,0,0.55);
+      min-width:260px;
+    }
+    .badge{display:inline-block;padding:7px 12px;background:linear-gradient(90deg, rgba(217,177,74,0.12), rgba(124,255,124,0.05));color:var(--accent);font-weight:700;border-radius:10px;font-size:12px;margin-bottom:12px}
+    h1{font-family:'Press Start 2P',monospace;font-size:20px;margin:8px 0;color:var(--accent)}
+    .lead{color:var(--muted);font-size:15px;line-height:1.45;margin-bottom:12px}
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin:12px 0 18px 0;
+    }
+    .benefit{
+      background:var(--card);
+      padding:12px;border-radius:10px;border:1px solid var(--glass-border);
+      display:flex;gap:10px;align-items:center;font-size:14px;color:var(--muted)
     }
 
-    h1{
-      font-family:'Press Start 2P', monospace;
-      font-size:16px;
-      color:var(--accent);
-      margin:0 0 14px 0;
-      text-align:center;
-    }
+    .progress{display:flex;align-items:center;gap:10px;margin-top:8px}
+    .bar{flex:1;height:12px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden}
+    .bar > i{display:block;height:100%;width:20%;background:linear-gradient(90deg,var(--accent-2),var(--accent))}
 
+    /* Right card (form) */
+    .card{
+      width:420px;
+      max-width:42%;
+      min-width:260px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+      border-radius:12px;padding:18px;border:1px solid var(--glass-border);
+      box-shadow:0 10px 26px rgba(0,0,0,0.5);
+    }
+    .welcome{font-size:14px;color:#bfe6c8;margin-bottom:10px;font-weight:600}
     label{display:block;color:var(--muted);font-size:13px;margin:8px 0 6px}
-    input[type="text"], input[type="tel"]{
-      width:100%;
-      padding:10px 12px;
-      border-radius:8px;
-      border: none;
-      background: var(--glass);
-      color: #eaf7ec;
-      font-size:14px;
+    input[type="text"], textarea{
+      width:100%;padding:12px 12px;border-radius:10px;border:none;background:var(--glass);color:#eaf7ec;font-size:15px;
+      outline:2px solid transparent;transition:outline-color .14s,transform .12s
     }
+    input:focus,textarea:focus{outline-color:rgba(124,255,124,0.12);transform:translateY(-2px)}
 
     .row{display:flex;gap:10px}
     .row .col{flex:1}
 
-    .small{font-size:12px;color:var(--muted);margin-top:8px}
-
-    .actions{
-      display:flex;
-      gap:10px;
-      margin-top:14px;
-      flex-wrap:wrap;
-    }
-    .btn{
-      flex:1;
-      padding:11px 12px;
-      border-radius:8px;
-      border:none;
-      font-weight:700;
-      cursor:pointer;
-      font-size:14px;
-    }
-    .btn-primary{background:var(--accent);color:#08130b}
+    .actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+    .btn{padding:12px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer;font-size:15px}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#c1912f);color:#08130b;box-shadow:0 6px 18px rgba(0,0,0,0.45)}
     .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
-    .btn-danger{background:var(--danger);color:#fff}
+    .btn-copy{background:transparent;border:1px dashed rgba(255,255,255,0.06);color:var(--muted)}
+    .small{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.3}
 
-    .meta{margin-top:12px;font-size:13px;color:var(--muted);line-height:1.45;}
-    .notice{margin-top:10px;padding:10px;border-radius:8px;background: rgba(255,255,255,0.02);font-size:13px;color:var(--muted);}
-    .ok{color: #bfe6c8;}
-    .center{text-align:center}
-    footer{margin-top:12px;font-size:12px;color:var(--muted);text-align:center}
+    .status{margin-top:10px;padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);color:var(--muted);font-size:13px}
 
-    /* Modal tabela */
-    .modal-bg{
-      display:none;
-      position:fixed;
-      top:0;left:0;width:100%;height:100%;
-      background:rgba(0,0,0,0.7);
-      justify-content:center;
-      align-items:center;
-      z-index:99;
+    /* modal */
+    .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:140;align-items:center;justify-content:center;padding:16px}
+    .modal{background:linear-gradient(180deg,var(--card),rgba(0,0,0,0.5));padding:16px;border-radius:12px;width:100%;max-width:920px;border:1px solid var(--glass-border);color:#eaf7ec}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:left;font-size:14px}
+    .edit-cell{background:transparent;border:1px dashed rgba(255,255,255,0.03);padding:6px;border-radius:6px;color:var(--muted)}
+
+    .qr-preview{display:flex;gap:12px;align-items:center;margin-top:12px}
+
+    /* small screens (mobile first improvements) */
+    @media (max-width:920px){
+      body{padding:14px}
+      .container{flex-direction:column;gap:12px;padding-bottom:26px}
+      .card{width:100%;max-width:100%}
+      .hero{order:2}
+      .hero-grid{grid-template-columns:1fr;gap:8px}
+      .lead{font-size:14px}
+      h1{font-size:18px}
+      .btn{font-size:15px;padding:12px}
+      .actions{flex-direction:column}
+      .row{flex-direction:row} /* keep two-col for small inputs when possible */
     }
-    .modal{
-      background:var(--panel);
-      padding:20px;
-      border-radius:var(--br);
-      max-width:400px;
-      width:90%;
-      color:#eaf7ec;
-    }
-    .modal table{
-      width:100%;border-collapse:collapse;
-      margin-top:10px;
-    }
-    .modal th, .modal td{
-      border:1px solid rgba(255,255,255,0.1);
-      padding:6px 4px;
-      text-align:center;
-    }
-    .close-btn{
-      margin-top:10px;
-      background:var(--accent);
-      color:#08130b;
-      padding:8px;
-      border:none;
-      border-radius:6px;
-      cursor:pointer;
-      width:100%;
+    @media (max-width:520px){
+      .row{flex-direction:column}
+      .hero-grid{gap:10px}
+      .badge{padding:6px 8px;font-size:11px}
+      input[type="text"],textarea{font-size:15px;padding:12px}
+      h1{font-size:16px}
     }
 
-    .welcome-msg{
-      margin-bottom:16px;
-      font-size:14px;
-      color:#bfe6c8;
-      line-height:1.5;
-      font-weight:600;
-    }
-
-    @media(max-width:520px){.row{flex-direction:column}}
+    /* Accessibility / focus */
+    a{color:var(--accent)}
+    button:focus, input:focus, textarea:focus{outline-offset:2px}
   </style>
 </head>
 <body>
-  <main class="card" role="main">
-    <div class="welcome-msg">
-      Olá, mundo! 🎉<br>
-      Parabéns! Você foi selecionado para fazer parte do <strong>Projeto DOSE</strong>.<br>
-      Aqui você terá acesso a promoções exclusivas, QR code personalizado e oportunidade de gerar renda extra, apenas como associado.<br>
-      Complete o cadastro abaixo para ativar seu perfil e começar a receber os benefícios em até 48 horas. DATA de início 13/10/25
-    </div>
+  <!-- confetti canvas -->
+  <canvas id="confetti" style="position:fixed;inset:0;pointer-events:none;z-index:150;display:none"></canvas>
 
-    <h1>Cadastro de Associado DOSE</h1>
+  <main class="container" role="main" aria-labelledby="heroTitle">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="badge">ACESSO VIP · GRÁTIS</div>
+      <h1 id="heroTitle">🎉 Olá, aventureiro! Bem-vindo ao Projeto DOSE</h1>
+      <p class="lead">
+        Parabéns — você foi pré-selecionado. Sem investimento: <strong>receba seu QR code até o dia 13</strong> (data da inauguração),
+        participe de brindes exclusivos e gere renda extra por unidade. Complete o cadastro no lado direito para ativar seu perfil.
+      </p>
 
-    <form id="assocForm" autocomplete="on" novalidate>
-      <label for="charname">Character Name / Subnick</label>
-      <input id="charname" name="charname" type="text" placeholder="ex: CLΛR12 ou seu apelido" required maxlength="40" />
+      <div class="hero-grid" aria-hidden="true">
+        <div class="benefit"><strong style="color:var(--accent);margin-right:8px">✓</strong><div><strong>Sem investimento</strong><div style="font-size:13px;color:var(--muted)">Cadastro gratuito</div></div></div>
+        <div class="benefit"><strong style="color:var(--accent);margin-right:8px">📦</strong><div><strong>Brindes exclusivos</strong><div style="font-size:13px;color:var(--muted)">Sorteios só para associados</div></div></div>
+        <div class="benefit"><strong style="color:var(--accent);margin-right:8px">📱</strong><div><strong>QR em 48h → até dia 13</strong><div style="font-size:13px;color:var(--muted)">Receba e compartilhe</div></div></div>
+        <div class="benefit"><strong style="color:var(--accent);margin-right:8px">🚚</strong><div><strong>Entrega sem taxa</strong><div style="font-size:13px;color:var(--muted)">Quando via QR em rotas</div></div></div>
+      </div>
 
-      <label for="endereco">Endereço Completo</label>
-      <input id="endereco" name="endereco" type="text" placeholder="Rua, número, complemento, bairro, cidade" required maxlength="120" />
-
-      <div class="row">
-        <div class="col">
-          <label for="numero">Número de Endereço</label>
-          <input id="numero" name="numero" type="text" placeholder="Ex: 102" required maxlength="10" />
+      <div style="margin-top:14px">
+        <div style="font-weight:700;color:var(--accent);margin-bottom:8px">Como transformar divulgação em renda</div>
+        <p style="color:var(--muted);margin:0 0 8px 0">Você recebe % por unidade gerada — use a tabela para simular ganhos mensais. Quanto mais divulgar, maior o potencial de renda.</p>
+        <div class="progress" aria-hidden="true">
+          <div class="bar"><i id="progressBar" style="width:20%"></i></div>
+          <div class="badge-lock" style="font-size:12px">Nível: <strong id="levelText">Iniciante</strong></div>
         </div>
-        <div class="col">
-          <label for="pix">Chave PIX</label>
-          <input id="pix" name="pix" type="text" placeholder="Número, CPF ou e-mail do PIX" required maxlength="60" />
+      </div>
+    </section>
+
+    <!-- FORM -->
+    <aside class="card" aria-labelledby="formTitle">
+      <div class="welcome" id="welcomeMsg">Preencha o formulário ao lado para ativar seu QR Code — ele será enviado até o dia <strong>13</strong> (inauguração).</div>
+      <h2 id="formTitle" style="font-family:'Press Start 2P';color:var(--accent);font-size:13px;margin:8px 0 12px 0">Cadastro de Associado DOSE</h2>
+
+      <form id="assocForm" autocomplete="on" novalidate>
+        <label for="charname">Character Name / Subnick</label>
+        <input id="charname" name="charname" type="text" placeholder="ex: CLΛR12 ou seu apelido" required maxlength="40" />
+
+        <label for="endereco">Endereço Completo</label>
+        <input id="endereco" name="endereco" type="text" placeholder="Rua, número, complemento, bairro, cidade" required maxlength="120" />
+
+        <div class="row" style="margin-top:6px">
+          <div class="col">
+            <label for="numero">Número</label>
+            <input id="numero" name="numero" type="text" placeholder="Ex: 102" required maxlength="10" />
+          </div>
+          <div class="col">
+            <label for="pix">Chave PIX</label>
+            <input id="pix" name="pix" type="text" placeholder="Número, CPF ou e-mail do PIX" required maxlength="60" />
+          </div>
         </div>
+
+        <label for="obs" style="margin-top:10px">Observações sobre o cartão</label>
+        <textarea id="obs" rows="3" class="edit-cell" placeholder="Escreva como quer seu cartão ou envie foto do modelo."></textarea>
+
+        <div style="margin-top:8px;font-size:13px;color:var(--muted)">
+          <strong>Nota sobre o cartão:</strong> escreva aqui o modelo desejado ou envie uma foto. O cartão será produzido e entregue no mês 11.
+          Você pode personalizá-lo (frases motivacionais, figuras, layout). Se não houver instruções, enviaremos o modelo tradicional da loja com seu QR e character name.
+        </div>
+
+        <label style="margin-top:10px"><input type="checkbox" id="agree" /> <strong>Li e aceito os <a href="#terms" id="termsLink">Termos & Privacidade (LGPD)</a></strong></label>
+
+        <div class="actions" style="margin-top:12px">
+          <button class="btn btn-primary" id="sendBtn" type="submit" aria-label="Abrir WhatsApp">Abrir WhatsApp e Enviar</button>
+          <button class="btn btn-copy" id="copyBtn" type="button" aria-label="Copiar mensagem">Copiar mensagem</button>
+          <button class="btn btn-ghost" id="tableBtn" type="button" aria-label="Ver tabela">Ver tabela de ganhos</button>
+        </div>
+
+        <div class="qr-preview" id="qrPreview" aria-hidden="true" style="display:none;margin-top:12px">
+          <div id="qrcode" aria-hidden="true"></div>
+          <div style="font-size:13px;color:var(--muted)">QR preview — será o link usado para divulgação.</div>
+        </div>
+
+        <div class="status" id="status" aria-live="polite">Pagamentos: dia <strong>12</strong> de cada mês. Você receberá o QR code até o dia <strong>13</strong>.</div>
+        <div class="small" style="margin-top:8px">Ao cadastrar, autorizo o envio do meu QR code e aceito participar de promoções para associados. Seus dados serão usados apenas para fins do Projeto DOSE.</div>
+      </form>
+
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:12px">
+        <div style="font-size:12px;color:var(--muted)">Contato: <strong>+55 47 99206-3317</strong></div>
+        <div style="font-size:12px;color:var(--muted)">v0.5 • DOSE</div>
       </div>
-
-      <div class="actions">
-        <button class="btn btn-primary" id="sendBtn" type="submit">Abrir WhatsApp com mensagem</button>
-        <button class="btn btn-ghost" type="button" id="copyBtn">Copiar mensagem</button>
-        <button class="btn btn-ghost" type="button" id="tableBtn">Ver tabela de ganhos</button>
-      </div>
-
-      <div class="meta">
-        <div><strong>Pagamentos:</strong> realizados todo dia <strong>12</strong> de cada mês. A data poderá ser ajustada no futuro.</div>
-        <div class="small">Ao cadastrar, você concorda em receber seu QR code em até <strong>48 horas</strong> e participar das promoções exclusivas para associados.</div>
-      </div>
-
-      <div class="notice center" id="status">Preencha os campos e abra o WhatsApp para enviar seu cadastro.</div>
-    </form>
-
-    <footer>
-      <div class="small">Os dados são enviados para o contato de vendas DOSE: <strong>+55 47 99206-3317</strong>. O envio abre o WhatsApp Web ou App e o associado precisa confirmar o envio.</div>
-    </footer>
+    </aside>
   </main>
 
-  <!-- Modal Tabela -->
-  <div class="modal-bg" id="modalBg">
-    <div class="modal">
-      <h2 class="center">Tabela de Ganhos por Unidade</h2>
-      <table>
-        <thead>
-          <tr><th>Produto</th><th>Valor</th><th>Porcentagem Associado</th></tr>
-        </thead>
-        <tbody>
+  <!-- Modal: tabela -->
+  <div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <h3 style="font-family:'Press Start 2P';color:var(--accent);font-size:13px;margin:0 0 8px 0">Tabela de Ganhos por Unidade</h3>
+      <p style="color:var(--muted);margin:0 0 10px 0">Edite valores para simular sua renda mensal. Use "Exportar CSV" para baixar os números.</p>
+
+      <div style="overflow:auto;max-height:54vh;padding-right:6px">
+        <table id="gainTable" aria-label="Tabela de ganhos">
+          <thead><tr><th>Produto</th><th>Valor (R$)</th><th>% Associado</th><th>Ganho/unid (R$)</th><th>Qtd/mês</th><th>Estimativa (R$)</th></tr></thead>
+          <tbody>
+            <tr data-prod="Sushi"><td>Sushi</td><td><input class="edit-cell price" value="10.00" /></td><td><input class="edit-cell pct" value="20" /></td><td class="gain">2.00</td><td><input class="edit-cell qty" value="10" /></td><td class="est">20.00</td></tr>
+            <tr data-prod="Pastel"><td>Pastel em Cone</td><td><input class="edit-cell price" value="8.00" /></td><td><input class="edit-cell pct" value="15" /></td><td class="gain">1.20</td><td><input class="edit-cell qty" value="10" /></td><td class="est">12.00</td></tr>
+            <tr data-prod="Bebida"><td>Bebida</td><td><input class="edit-cell price" value="5.00" /></td><td><input class="edit-cell pct" value="10" /></td><td class="gain">0.50</td><td><input class="edit-cell qty" value="10" /></td><td class="est">5.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button class="btn btn-ghost" id="exportCsv">Exportar CSV</button>
+        <button class="btn btn-ghost" id="saveTable">Salvar localmente</button>
+        <button class="btn btn-primary" id="applyCalc">Atualizar cálculos</button>
+        <button class="btn btn-ghost" id="closeModal">Fechar</button>
+      </div>
+
+      <p style="margin-top:10px;color:var(--muted);font-size:13px">Alterações ficam salvas no navegador. Para aplicar globalmente, integre com planilha/servidor.</p>
+    </div>
+  </div>
+
+  <!-- Terms modal -->
+  <div class="modal-bg" id="termsModal" style="display:none"><div class="modal"><h3 style="font-family:'Press Start 2P';color:var(--accent);font-size:13px;margin:0 0 8px 0">Termos e Privacidade</h3><p style="color:var(--muted);margin:0 0 12px 0">Coletamos nome, endereço e chave PIX para gerenciar o cadastro, gerar cartão e processar pagamentos. Dados não serão vendidos. Para exclusão, contate o administrador.</p><div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" id="acceptTerms">Entendi</button></div></div></div>
+
+  <!-- External libs: QRCode.js + jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    // ---------- Config ----------
+    const WA_PHONE = '5547992063317';
+
+    // ---------- Elements ----------
+    const form = document.getElementById('assocForm');
+    const charnameEl = document.getElementById('charname');
+    const enderecoEl = document.getElementById('endereco');
+    const numeroEl = document.getElementById('numero');
+    const pixEl = document.getElementById('pix');
+    const obsEl = document.getElementById('obs');
+    const agreeEl = document.getElementById('agree');
+    const statusEl = document.getElementById('status');
+    const copyBtn = document.getElementById('copyBtn');
+    const sendBtn = document.getElementById('sendBtn');
+    const tableBtn = document.getElementById('tableBtn');
+    const modalBg = document.getElementById('modalBg');
+    const closeModal = document.getElementById('closeModal');
+    const applyCalc = document.getElementById('applyCalc');
+    const saveTable = document.getElementById('saveTable');
+    const exportCsv = document.getElementById('exportCsv');
+    const qrPreview = document.getElementById('qrPreview');
+    const qrcodeEl = document.getElementById('qrcode');
+    const termsLink = document.getElementById('termsLink');
+    const termsModal = document.getElementById('termsModal');
+    const acceptTerms = document.getElementById('acceptTerms');
+    const confettiCanvas = document.getElementById('confetti');
+    const confettiCtx = confettiCanvas.getContext && confettiCanvas.getContext('2d');
+
+    // ---------- Utils ----------
+    function saveLocal(k,d){ try{ localStorage.setItem(k, JSON.stringify(d)); }catch(e){} }
+    function loadLocal(k, fallback){ try{ return JSON.parse(localStorage.getItem(k)||'null') || fallback }catch(e){ return fallback } }
+
+    function updateStatus(msg, ok=true){ statusEl.textContent = msg; statusEl.style.color = ok ? '#bfe6c8' : '#f3b1b1'; }
+
+    function buildMessage(){
+      const now = new Date().toLocaleString('pt-BR',{hour12:false});
+      return [
+        'NOVO CADASTRO - DOSE',
+        `Data/Hora: ${now}`,
+        `Character: ${charnameEl.value || '[não informado]'}`,
+        `Endereço: ${enderecoEl.value || '[não informado]'}`,
+        `Número: ${numeroEl.value || '[não informado]'}`,
+        `PIX: ${pixEl.value || '[não informado]'}`,
+        `Observações: ${obsEl.value || '[nenhuma]'}`,
+        '',
+        '— Enviado via formulário DOSE'
+      ].join('\n');
+    }
+    function buildWaUrl(){ return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(buildMessage())}`; }
+
+    function validate(){
+      if(!agreeEl.checked) return {ok:false, msg:'Você precisa aceitar os termos e privacidade.'};
+      if(!charnameEl.value.trim()) return {ok:false, msg:'Informe o Character Name.'};
+      if(!enderecoEl.value.trim()) return {ok:false, msg:'Informe o endereço completo.'};
+      if(!numeroEl.value.trim()) return {ok:false, msg:'Informe o número do endereço.'};
+      if(!pixEl.value.trim()) return {ok:false, msg:'Informe a chave PIX.'};
+      return {ok:true};
+    }
+
+    // ---------- Form save/load ----------
+    function loadForm(){
+      const s = loadLocal('dose_assoc_v5', {});
+      if(s.charname) charnameEl.value = s.charname;
+      if(s.endereco) enderecoEl.value = s.endereco;
+      if(s.numero) numeroEl.value = s.numero;
+      if(s.pix) pixEl.value = s.pix;
+      if(s.obs) obsEl.value = s.obs;
+      if(s.agree) agreeEl.checked = s.agree;
+      updateStatus('Dados carregados do dispositivo.');
+    }
+    function saveForm(){
+      const payload = { charname:charnameEl.value.trim(), endereco:enderecoEl.value.trim(), numero:numeroEl.value.trim(), pix:pixEl.value.trim(), obs:obsEl.value.trim(), agree:agreeEl.checked, date:new Date().toISOString() };
+      saveLocal('dose_assoc_v5', payload);
+    }
+
+    // ---------- Clipboard ----------
+    copyBtn.addEventListener('click', async ()=>{
+      const v = validate(); if(!v.ok){ updateStatus(v.msg,false); return; }
+      try{ await navigator.clipboard.writeText(buildMessage()); updateStatus('Mensagem copiada para a área de transferência.'); burstConfetti(); }catch(e){ updateStatus('Erro ao copiar — copie manualmente.', false); }
+    });
+
+    // ---------- Submit -> WhatsApp (opens Web/app) ----------
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const v = validate(); if(!v.ok){ updateStatus(v.msg,false); return; }
+      saveForm();
+      sendBtn.disabled = true; sendBtn.textContent = 'Abrindo WhatsApp...';
+      window.open(buildWaUrl(), '_blank');
+      setTimeout(()=>{ sendBtn.disabled = false; sendBtn.textContent = 'Abrir WhatsApp e Enviar'; updateStatus('WhatsApp aberto — confirme o envio. QR será processado até o dia 13.'); burstConfetti(); showQrPreview(); pushToCentralLocal(); }, 900);
+    });
+
+    // ---------- QR preview ----------
+    let qrInstance = null;
+    function showQrPreview(){
+      const txt = buildWaUrl();
+      qrcodeEl.innerHTML = '';
+      try{ qrInstance = new QRCode(qrcodeEl, { text: txt, width:120, height:120 }); qrPreview.style.display = 'flex'; qrPreview.setAttribute('aria-hidden','false'); }catch(e){ qrPreview.style.display='none' }
+    }
+
+    // ---------- Table calculations ----------
+    function recalcTable(){
+      const rows = Array.from(document.querySelectorAll('#gainTable tbody tr'));
+      rows.forEach(r=>{
+        const price = parseFloat((r.querySelector('.price').value||'0').replace(',','.'))||0;
+        const pct = parseFloat((r.querySelector('.pct').value||'0').replace(',','.'))||0;
+        const qty = parseInt(r.querySelector('.qty').value||'0')||0;
+        const gain = Math.round((price*(pct/100)+Number.EPSILON)*100)/100;
+        const est = Math.round((gain*qty+Number.EPSILON)*100)/100;
+        r.querySelector('.gain').textContent = gain.toFixed(2);
+        r.querySelector('.est').textContent = est.toFixed(2);
+      });
+    }
+    applyCalc.addEventListener('click', ()=>{ recalcTable(); updateStatus('Tabela atualizada (local).'); });
+
+    saveTable.addEventListener('click', ()=>{
+      const rows = Array.from(document.querySelectorAll('#gainTable tbody tr'));
+      const data = rows.map(r=>({ prod:r.dataset.prod, price:r.querySelector('.price').value, pct:r.querySelector('.pct').value, qty:r.querySelector('.qty').value }));
+      saveLocal('dose_table_v3', data);
+      updateStatus('Tabela salva localmente.');
+    });
+
+    exportCsv.addEventListener('click', ()=>{
+      const rows = Array.from(document.querySelectorAll('#gainTable tbody tr'));
+      const header = ['Produto','Valor','% Associado','Ganho/unid','Qtd/mês','Estimativa mensal'];
+      const out = [header.join(',')];
+      rows.forEach(r=>{
+        const prod = r.dataset.prod;
+        const price = r.querySelector('.price').value;
+        const pct = r.querySelector('.pct').value;
+        const gain = r.querySelector('.gain').textContent;
+        const qty = r.querySelector('.qty').value;
+        const est = r.querySelector('.est').textContent;
+        out.push([prod,price,pct,gain,qty,est].join(','));
+      });
+      const blob = new Blob([out.join('\n')], {type:'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'dose_tabela_ganhos.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      updateStatus('CSV gerado.');
+    });
+
+    function loadTable(){
+      const data = loadLocal('dose_table_v3', null);
+      if(!data) return;
+      const rows = Array.from(document.querySelectorAll('#gainTable tbody tr'));
+      rows.forEach(r=>{
+        const obj = data.find(d=>d.prod === r.dataset.prod);
+        if(obj){ r.querySelector('.price').value = obj.price; r.querySelector('.pct').value = obj.pct; r.querySelector('.qty').value = obj.qty; }
+      });
+      recalcTable();
+    }
+
+    // ---------- PDF card generator ----------
+    async function generatePdfCard(){
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({unit:'pt',format:[320,180]});
+      doc.setFillColor(6,42,23); doc.rect(0,0,320,180,'F');
+      doc.setFontSize(11); doc.setTextColor(217,177,74); doc.setFont('helvetica','bold');
+      doc.text('DOSE - Associado', 14, 26);
+      doc.setFontSize(9); doc.setTextColor(255,255,255);
+      doc.text(`Character: ${charnameEl.value || ''}`,14,52);
+      doc.text(`Contato: +55 47 99206-3317`,14,68);
+      doc.text(`PIX: ${pixEl.value || ''}`,14,84);
+      // QR: render to temporary container
+      const wrapper = document.createElement('div'); wrapper.style.display='none'; document.body.appendChild(wrapper);
+      new QRCode(wrapper, { text: buildWaUrl(), width:110, height:110 });
+      await new Promise(r=>setTimeout(r,320));
+      const img = wrapper.querySelector('img') || wrapper.querySelector('canvas');
+      if(img){
+        const dataUrl = img.tagName === 'IMG' ? img.src : img.toDataURL('image/png');
+        doc.addImage(dataUrl, 'PNG', 190, 40, 110, 110);
+      }
+      wrapper.remove();
+      doc.setFontSize(7); doc.setTextColor(180,180,180);
+      doc.text('Cartão digital - imprimir 1:1',14,170);
+      doc.save(`${(charnameEl.value||'assoc').replace(/\s+/g,'_')}_dose_card.pdf`);
+    }
+
+    // ---------- Confetti ----------
+    let confettiPieces = [];
+    function resizeConfetti(){ if(!confettiCtx) return; confettiCanvas.width = innerWidth; confettiCanvas.height = innerHeight; }
+    function initConfetti(){ if(!confettiCtx) return; resizeConfetti(); window.addEventListener('resize', resizeConfetti); }
+    function burstConfetti(){
+      if(!confettiCtx) return;
+      confettiCanvas.style.display = 'block';
+      const colors = ['#d9b14a','#7cff7c','#9db39a','#ffffff'];
+      for(let i=0;i<80;i++){
+        confettiPieces.push({ x: Math.random()*innerWidth, y: -20 - Math.random()*300, vx:(Math.random()-0.5)*6, vy:Math.random()*4+2, r:Math.random()*6+3, color: colors[Math.floor(Math.random()*colors.length)], life:0, ttl:120+Math.random()*100 });
+      }
+      requestAnimationFrame(runConfetti);
+      setTimeout(()=>{ confettiCanvas.style.display='none'; confettiPieces=[]; confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); }, 2400);
+    }
+    function runConfetti(){
+      if(!confettiCtx) return;
+      confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+      for(let i=confettiPieces.length-1;i>=0;i--){
+        const p = confettiPieces[i];
+        p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.life++;
+        confettiCtx.fillStyle = p.color;
+        confettiCtx.beginPath();
+        confettiCtx.ellipse(p.x, p.y, p.r, p.r*0.7, p.life*0.01, 0, Math.PI*2);
+        confettiCtx.fill();
+        if(p.life > p.ttl || p.y > innerHeight + 50) confettiPieces.splice(i,1);
+      }
+      if(confettiPieces.length>0) requestAnimationFrame(runConfetti);
+    }
+
+    // ---------- Central local (simulação) ----------
+    function pushToCentralLocal(){
+      const all = loadLocal('dose_all_assoc_v1', []);
+      const payload = { charname:charnameEl.value.trim(), endereco:enderecoEl.value.trim(), numero:numeroEl.value.trim(), pix:pixEl.value.trim(), obs:obsEl.value.trim(), date: new Date().toISOString() };
+      all.push(payload); saveLocal('dose_all_assoc_v1', all); updateStatus('Cadastro salvo localmente (simulado central).');
+    }
+
+    // ---------- Modal handlers ----------
+    tableBtn.addEventListener('click', ()=>{ modalBg.style.display='flex'; modalBg.setAttribute('aria-hidden','false'); });
+    closeModal.addEventListener('click', ()=>{ modalBg.style.display='none'; modalBg.setAttribute('aria-hidden','true'); });
+    modalBg.addEventListener('click', (e)=>{ if(e.target === modalBg) { closeModal.click(); } });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal.click(); });
+
+    termsLink.addEventListener('click', (e)=>{ e.preventDefault(); termsModal.style.display='flex'; });
+    acceptTerms.addEventListener('click', ()=>{ termsModal.style.display='none'; agreeEl.checked = true; saveForm(); updateStatus('Termos aceitos.'); });
+
+    // ---------- Init ----------
+    (function init(){
+      initConfetti();
+      loadForm();
+      loadTable();
+      recalcTable();
+      // quick actions: dblclick a row to produce example card
+      document.querySelectorAll('#gainTable tbody tr').forEach(r=> r.addEventListener('dblclick', ()=>{ recalcTable(); generatePdfCard(); }));
+      // small accessibility: enter key on copy button
+    })();
+  </script>
+</body>
+</html>
