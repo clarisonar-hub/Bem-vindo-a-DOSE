@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cadastro de Associado — DOSE</title>
+  <meta name="description" content="Cadastro de associado DOSE — receba QR code e comece a divulgar." />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#071711;
+      --panel:#0f2b20;
+      --accent:#d9b14a;
+      --muted:#9db39a;
+      --danger:#b34848;
+      --glass: rgba(255,255,255,0.03);
+      --br:10px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #06120b 0%, #0a281b 100%);
+      color: #eaf7ec;
+      padding: 30px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .card{
+      width:100%;
+      max-width:520px;
+      background: linear-gradient(180deg,var(--panel), rgba(0,0,0,0.2));
+      border-radius: var(--br);
+      padding:22px;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+      text-align:center;
+    }
+
+    h1{
+      font-family:'Press Start 2P', monospace;
+      font-size:16px;
+      color:var(--accent);
+      margin:0 0 14px 0;
+      text-align:center;
+    }
+
+    label{display:block;color:var(--muted);font-size:13px;margin:8px 0 6px}
+    input[type="text"], input[type="tel"]{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border: none;
+      background: var(--glass);
+      color: #eaf7ec;
+      font-size:14px;
+    }
+
+    .row{display:flex;gap:10px}
+    .row .col{flex:1}
+
+    .small{font-size:12px;color:var(--muted);margin-top:8px}
+
+    .actions{
+      display:flex;
+      gap:10px;
+      margin-top:14px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      flex:1;
+      padding:11px 12px;
+      border-radius:8px;
+      border:none;
+      font-weight:700;
+      cursor:pointer;
+      font-size:14px;
+    }
+    .btn-primary{background:var(--accent);color:#08130b}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    .btn-danger{background:var(--danger);color:#fff}
+
+    .meta{margin-top:12px;font-size:13px;color:var(--muted);line-height:1.45;}
+    .notice{margin-top:10px;padding:10px;border-radius:8px;background: rgba(255,255,255,0.02);font-size:13px;color:var(--muted);}
+    .ok{color: #bfe6c8;}
+    .center{text-align:center}
+    footer{margin-top:12px;font-size:12px;color:var(--muted);text-align:center}
+
+    /* Modal tabela */
+    .modal-bg{
+      display:none;
+      position:fixed;
+      top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.7);
+      justify-content:center;
+      align-items:center;
+      z-index:99;
+    }
+    .modal{
+      background:var(--panel);
+      padding:20px;
+      border-radius:var(--br);
+      max-width:400px;
+      width:90%;
+      color:#eaf7ec;
+    }
+    .modal table{
+      width:100%;border-collapse:collapse;
+      margin-top:10px;
+    }
+    .modal th, .modal td{
+      border:1px solid rgba(255,255,255,0.1);
+      padding:6px 4px;
+      text-align:center;
+    }
+    .close-btn{
+      margin-top:10px;
+      background:var(--accent);
+      color:#08130b;
+      padding:8px;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      width:100%;
+    }
+
+    .welcome-msg{
+      margin-bottom:16px;
+      font-size:14px;
+      color:#bfe6c8;
+      line-height:1.5;
+      font-weight:600;
+    }
+
+    @media(max-width:520px){.row{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <div class="welcome-msg">
+      Olá, mundo! 🎉<br>
+      Parabéns! Você foi selecionado para fazer parte do <strong>Projeto DOSE</strong>.<br>
+      Aqui você terá acesso a promoções exclusivas, QR code personalizado e oportunidade de gerar renda extra, apenas como associado.<br>
+      Complete o cadastro abaixo para ativar seu perfil e começar a receber os benefícios em até 48 horas. DATA de início 13/10/25
+    </div>
+
+    <h1>Cadastro de Associado DOSE</h1>
+
+    <form id="assocForm" autocomplete="on" novalidate>
+      <label for="charname">Character Name / Subnick</label>
+      <input id="charname" name="charname" type="text" placeholder="ex: CLΛR12 ou seu apelido" required maxlength="40" />
+
+      <label for="endereco">Endereço Completo</label>
+      <input id="endereco" name="endereco" type="text" placeholder="Rua, número, complemento, bairro, cidade" required maxlength="120" />
+
+      <div class="row">
+        <div class="col">
+          <label for="numero">Número de Endereço</label>
+          <input id="numero" name="numero" type="text" placeholder="Ex: 102" required maxlength="10" />
+        </div>
+        <div class="col">
+          <label for="pix">Chave PIX</label>
+          <input id="pix" name="pix" type="text" placeholder="Número, CPF ou e-mail do PIX" required maxlength="60" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="sendBtn" type="submit">Abrir WhatsApp com mensagem</button>
+        <button class="btn btn-ghost" type="button" id="copyBtn">Copiar mensagem</button>
+        <button class="btn btn-ghost" type="button" id="tableBtn">Ver tabela de ganhos</button>
+      </div>
+
+      <div class="meta">
+        <div><strong>Pagamentos:</strong> realizados todo dia <strong>12</strong> de cada mês. A data poderá ser ajustada no futuro.</div>
+        <div class="small">Ao cadastrar, você concorda em receber seu QR code em até <strong>48 horas</strong> e participar das promoções exclusivas para associados.</div>
+      </div>
+
+      <div class="notice center" id="status">Preencha os campos e abra o WhatsApp para enviar seu cadastro.</div>
+    </form>
+
+    <footer>
+      <div class="small">Os dados são enviados para o contato de vendas DOSE: <strong>+55 47 99206-3317</strong>. O envio abre o WhatsApp Web ou App e o associado precisa confirmar o envio.</div>
+    </footer>
+  </main>
+
+  <!-- Modal Tabela -->
+  <div class="modal-bg" id="modalBg">
+    <div class="modal">
+      <h2 class="center">Tabela de Ganhos por Unidade</h2>
+      <table>
+        <thead>
+          <tr><th>Produto</th><th>Valor</th><th>Porcentagem Associado</th></tr>
+        </thead>
+        <tbody>
